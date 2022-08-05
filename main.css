@@ -1,0 +1,99 @@
+body {
+  background-color:whitesmoke;
+}
+
+/* welcome page styling */
+
+.start-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+}
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.title-name {
+  font-size: 50px;
+}
+.title-description {
+  font-size: 15px;
+  font-family: fantasy;
+}
+.buttons-start{
+    padding: 20px;
+}
+
+button {
+  font-family: monospace;
+  background-color: floralwhite;
+  border-radius: 5px;
+  border-color: black;
+}
+
+/* game board page */
+
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.game-description {
+  font-size: 10px;
+  font-family: fantasy;
+}
+.game-board{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  height: 280px;
+  width: 280px;
+  border: 2px solid black;
+  border-radius: 10px;
+  justify-content: center;
+  margin: 20px;
+}
+.grid-row {
+  display: flex;
+  flex-direction: row;
+}
+.grid-cell {
+  height: 70px;
+  width: 70px;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 10px;
+}
+
+/* score page styling */
+.score-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.score-board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+ul {
+  list-style-type: none;
+  text-align: center;
+  padding: 0px;
+}
+
+li{
+    border: 1px solid black;
+    border-radius: 3px;
+    padding: 5px;
+    margin: 10px;
+}
