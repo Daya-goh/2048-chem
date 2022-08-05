@@ -1,5 +1,5 @@
 body {
-  background-color: whitesmoke;
+  background-color: white;
 }
 
 /* welcome page styling */
@@ -66,9 +66,13 @@ button {
 .grid-cell {
   height: 70px;
   width: 70px;
-  border: 1px solid black;
+  /* border: 1px solid black; */
+  background-color: azure;
   border-radius: 5px;
   margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* score page styling */
@@ -96,4 +100,32 @@ li {
   border-radius: 3px;
   padding: 5px;
   margin: 10px;
+}
+
+/* tile */
+
+.tile {
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+
+  background-color: cornflowerblue;
+  border-radius: 5px;
+  height: 70px;
+  width: 75px;
+  text-align: center;
+}
+
+.element {
+  width: 72%;
+  font-size: 30px;
+  line-height: 70px;
+  text-align: center;
+}
+.atomicNum {
+  display: flex;
+  text-align: left;
+  height: 70px;
+  font-size: 15px;
+  padding-left: 3px;
 }
