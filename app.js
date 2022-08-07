@@ -1,14 +1,30 @@
 import $ from "jquery";
 console.log($);
 import "./main.css";
-/* -------------------------------------------------------------------------- */
 
-/* ------------------------------ game content ------------------------------ */
+/* ------------------------------------------------------ */
+
+/* ------------------------------------------------------ */
+/*                      game content                      */
+/* ------------------------------------------------------ */
 const game = {
   page: "#game-page",
+  // index correspond to position of grid-cells
+  positionArray: [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ],
 };
-/* ----------- generate random tile ----------- */
-/* ----- pick a random grid cell container ----- */
+/* ----------------- generate random tile ----------------- */
+
+/* ---- pick a random grid cell container --- */
 
 //creating a tile
 class tile {
@@ -18,18 +34,33 @@ class tile {
   }
   newTile = () => {
     //creating a tile div
-    const randomContainer = Math.floor(Math.random() * 8);
+    let randomContainer = Math.floor(Math.random() * game.positionArray.length);
+  
     console.log(randomContainer);
+    while (true) {
+      if (game.positionArray[randomContainer] === false) {
+        const $tile = $("<div>").addClass("tile");
+        $(".grid-cell").eq(randomContainer).append($tile);
+        const $atomicNum = $("<div>")
+          .addClass("atomicNum")
+          .text(this.atomicNum);
+        $tile.append($atomicNum);
+        const $elementName = $("<div>")
+          .addClass("element")
+          .text(this.elementName);
+        $atomicNum.append($elementName);
 
-    const $tile = $("<div>").addClass("tile");
-    $(".grid-cell").eq(randomContainer).append($tile);
-
-    const $atomicNum = $("<div>").addClass("atomicNum").text(this.atomicNum);
-    $tile.append($atomicNum);
-    const $elementName = $("<div>").addClass("element").text(this.elementName);
-    $atomicNum.append($elementName);
+        //set condition to true
+        game.positionArray[randomContainer] = true;
+        console.log(game.positionArray);
+        return;
+      } else {
+        randomContainer = Math.floor(Math.random() * game.positionArray.length);
+      }
+    }
   };
-}
+} //if all 9 containers are filled, the loop will not exit. must 
+//account for it later.
 
 const hydrogen = new tile(1, "H");
 
@@ -39,16 +70,21 @@ const onStart = () => {
 };
 onStart();
 //const helium = new tile(2, "He");
-/* ------------------------------- game logic ------------------------------- */
+
+/* ------------------------------------------------------ */
+/*                       game logic                       */
+/* ------------------------------------------------------ */
 //update screen
 const render = () => {
   $(".page").hide();
   $(game.page).show();
 };
 
-/* -------------------------------- game play ------------------------------- */
+/* ------------------------------------------------------ */
+/*                        game play                       */
+/* ------------------------------------------------------ */
 
-/* ------------- page transition ------------- */
+/* ------------------- page transition ------------------ */
 const pageTransition = () => {
   $(".start-button").on("click", () => {
     game.page = "#game-page";
