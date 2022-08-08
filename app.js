@@ -67,13 +67,13 @@ const hydrogen = new tile(1, "H");
 
 const onStart = () => {
   hydrogen.newTile();
-  hydrogen.newTile();
+  //hydrogen.newTile();
 };
 onStart();
 
-
-//const helium = new tile(2, "He");
-
+console.log(hydrogen.position);
+const helium = new tile(2, "He");
+//helium.newTile();
 /* ------------------------------------------------------ */
 /*                       game logic                       */
 /* ------------------------------------------------------ */
@@ -115,4 +115,94 @@ const pageTransition = () => {
 console.log();
 pageTransition();
 
-const moveDown = () => {};
+const moveDown = () => {
+  $(".down").on("click", () => {
+    console.log("click");
+    if (
+      game.positionArray[6] === true ||
+      game.positionArray[7] === true ||
+      game.positionArray[8] === true
+    ) {
+      $(".tile").appendTo($(".grid-cell").eq(hydrogen.position));
+      console.log("I cannot move");
+    } else {
+      $(".tile").appendTo($(".grid-cell").eq(hydrogen.position + 3));
+      game.positionArray[hydrogen.position] = false;
+      hydrogen.position = hydrogen.position + 3;
+      game.positionArray[hydrogen.position] = true;
+      console.log(hydrogen);
+      console.log(game.positionArray);
+    }
+  });
+};
+
+moveDown();
+
+const moveUp = () => {
+  $(".up").on("click", () => {
+    console.log("click");
+    if (
+      game.positionArray[0] === true ||
+      game.positionArray[1] === true ||
+      game.positionArray[2] === true
+    ) {
+      $(".tile").appendTo($(".grid-cell").eq(hydrogen.position));
+      console.log("I cannot move");
+    } else {
+      $(".tile").appendTo($(".grid-cell").eq(hydrogen.position - 3));
+      game.positionArray[hydrogen.position] = false;
+      hydrogen.position = hydrogen.position - 3;
+      game.positionArray[hydrogen.position] = true;
+      console.log(hydrogen);
+      console.log(game.positionArray);
+    }
+  });
+};
+
+moveUp();
+
+const moveRight = () => {
+  $(".right").on("click", () => {
+    console.log("click");
+    if (
+      game.positionArray[2] === true ||
+      game.positionArray[5] === true ||
+      game.positionArray[8] === true
+    ) {
+      $(".tile").appendTo($(".grid-cell").eq(hydrogen.position));
+      console.log("I cannot move");
+    } else {
+      $(".tile").appendTo($(".grid-cell").eq(hydrogen.position + 1));
+      game.positionArray[hydrogen.position] = false;
+      hydrogen.position = hydrogen.position + 1;
+      game.positionArray[hydrogen.position] = true;
+      console.log(hydrogen);
+      console.log(game.positionArray);
+    }
+  });
+};
+
+moveRight();
+
+const moveLeft = () => {
+  $(".left").on("click", () => {
+    console.log("click");
+    if (
+      game.positionArray[0] === true ||
+      game.positionArray[3] === true ||
+      game.positionArray[6] === true
+    ) {
+      $(".tile").appendTo($(".grid-cell").eq(hydrogen.position));
+      console.log("I cannot move");
+    } else {
+      $(".tile").appendTo($(".grid-cell").eq(hydrogen.position - 1));
+      game.positionArray[hydrogen.position] = false;
+      hydrogen.position = hydrogen.position - 1;
+      game.positionArray[hydrogen.position] = true;
+      console.log(hydrogen);
+      console.log(game.positionArray);
+    }
+  });
+};
+
+moveLeft();
