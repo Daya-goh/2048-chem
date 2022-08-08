@@ -28,14 +28,15 @@ const game = {
 
 //creating a tile
 class tile {
-  constructor(atomicNum, elementName) {
+  constructor(atomicNum, elementName, position) {
     this.atomicNum = atomicNum;
     this.elementName = elementName;
+    this.position = -1;
   }
   newTile = () => {
     //creating a tile div
     let randomContainer = Math.floor(Math.random() * game.positionArray.length);
-  
+    this.position = randomContainer;
     console.log(randomContainer);
     while (true) {
       if (game.positionArray[randomContainer] === false) {
@@ -59,7 +60,7 @@ class tile {
       }
     }
   };
-} //if all 9 containers are filled, the loop will not exit. must 
+} //if all 9 containers are filled, the loop will not exit. must
 //account for it later.
 
 const hydrogen = new tile(1, "H");
@@ -69,6 +70,8 @@ const onStart = () => {
   hydrogen.newTile();
 };
 onStart();
+
+
 //const helium = new tile(2, "He");
 
 /* ------------------------------------------------------ */
@@ -109,5 +112,7 @@ const pageTransition = () => {
   });
   render();
 };
-
+console.log();
 pageTransition();
+
+const moveDown = () => {};
