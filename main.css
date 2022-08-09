@@ -58,9 +58,7 @@ button {
   border-radius: 5px;
   justify-content: space-evenly;
   align-items: center;
- 
 }
-
 
 /* score page styling */
 .score-page {
@@ -93,7 +91,7 @@ li {
 
 .tile {
   /* border: 1px solid red; */
-  background-color:azure;
+  background-color: azure;
   border-radius: 5px;
   height: 90px;
   width: 90px;
@@ -102,7 +100,6 @@ li {
   justify-content: center;
   align-items: center;
   font-size: 40px;
-
 }
 
 .element {
@@ -119,22 +116,47 @@ li {
   padding-left: 3px;
 }
 
-.x2{
+.x1 {
+  /* Hydrogen[1] */
   background-color: #bcd4e6;
 }
-.x4{
+.x2 {
+  /* Helium[2] */
   background-color: #add8e6;
 }
-.x8{
+.x4 {
+  /* Lithium[3] */
   background-color: #c4d8e2;
 }
-.x16{
+.x8 {
+  /* Beryllium[4] */
   background-color: #b0c4de;
 }
 
-.x32 {
+.x16 {
+  /* Boron[5] */
   background-color: #9bc4e2;
 }
-.x64 {
+.x32 {
+  /* Carbon[6] */
   background-color: #7ea4b3;
+}
+.x64 {
+  /* Nitrogen[7] */
+  background-color: #aec6cf;
+}
+
+.x128 {
+  /* Oxygen[8] */
+  background-color: #b4c4c9;
+}
+
+.x256 {
+  /* Fluorine[9] */
+  background-color: #bac1c4;
+}
+
+.x512 {
+  /* Neon[10] */
+  background-color: #c0bfbe;
 }
