@@ -29,15 +29,15 @@ const game = {
 /*                        game play                       */
 /* ------------------------------------------------------ */
 const renderGameBoard = () => {
-  startTile();
-  startTile();
+  newTile();
+  newTile();
   createBoard();
 };
 
 const createBoard = () => {
   for (let r = 0; r < game.rows; r++) {
     for (let c = 0; c < game.columns; c++) {
-      const $tile = $("<div>").attr("id", r.toString() + "-" + c.toString());
+      let $tile = $("<div>").attr("id", r.toString() + "-" + c.toString());
       $tile.addClass("tile");
       let num = game.gameBoard[r][c]; //adding numbers from gameBoard to tiles
       $tile.addClass("x" + num);
@@ -50,7 +50,24 @@ const createBoard = () => {
   }
 };
 
-const startTile = () => {
+const updateGameBoard = () => {
+  $(".tile").empty();
+  $(".tile").attr("class", "tile");
+
+  for (let r = 0; r < game.rows; r++) {
+    for (let c = 0; c < game.columns; c++) {
+      if (game.gameBoard[r][c] > 0) {
+        $("#" + r.toString() + "-" + c.toString()).text(game.gameBoard[r][c]);
+
+        $("#" + r.toString() + "-" + c.toString()).addClass(
+          "x" + game.gameBoard[r][c].toString()
+        );
+      }
+    }
+  }
+};
+
+const newTile = () => {
   while (true) {
     let r = Math.round(Math.random() * 3);
     let c = Math.round(Math.random() * 3);
@@ -64,58 +81,115 @@ const startTile = () => {
   }
 };
 
-const mergeTile = () => {};
-
 //move left
 // clear zero for 1 row
 const clearZeroTiles = (rowArray) => {
   return rowArray.filter((num) => num !== 0); //return array
 };
 
-// put zero back
-const putZeroBack = (rowArray) => {
+//put zero back
+
+const putZeroBack = (rowArray, arrayMovement) => {
   for (let i = 0; i < game.columns; i++) {
     if (rowArray.length < game.columns) {
-      console.log("test");
-      rowArray.push(0);
+      switch (arrayMovement) {
+        case "moveLeft":
+          rowArray.push(0);
+          break;
+        case "moveRight":
+          rowArray.unshift(0);
+          break;
+        case "moveDown":
+          rowArray.push(0);
+          break;
+      }
     }
   }
   return rowArray;
 };
-// console.log(putZeroBack([2, 4]));
-// reference source https://www.youtube.com/watch?v=XM2n1gu4530&t=1031s -> slide code idea/concept
+
 // for every row
 // clear zero for each row
 // merge
 // clear zero
 // put zero back
-const move = (rowArray) => {
+
+const moveLeft = (rowArray) => {
   rowArray = clearZeroTiles(rowArray);
-  for (let i = 0; i < rowArray.length - 1; i++) {
+
+  for (let i = 0; i < rowArray.length; i++) {
     if (rowArray[i] === rowArray[i + 1]) {
-      rowArray[i] = rowArray[i] * 2;
+      rowArray[i] = rowArray[i + 1] * 2;
       rowArray[i + 1] = 0;
     }
   }
+
   rowArray = clearZeroTiles(rowArray);
-  putZeroBack(rowArray);
+  putZeroBack(rowArray, "moveLeft");
   return rowArray;
 };
 
-console.log(move([2, 4, 2, 2]));
+const moveRight = (rowArray) => {
+  for (let i = 3; i >= 0; i--) {
+    if (rowArray[i] === rowArray[i - 1]) {
+      rowArray[i] = rowArray[i - 1] * 2;
+      rowArray[i - 1] = 0;
+    }
+  }
+
+  rowArray = clearZeroTiles(rowArray);
+  putZeroBack(rowArray, "moveRight");
+  return rowArray;
+};
+
+
+const moveDown = (rowArray) => {
+  // https://stackoverflow.com/questions/17428587/transposing-a-2d-array-in-javascript -transposing matrix
+  rowArray = clearZeroTiles(rowArray);
+  for (let i = 0; i < rowArray.length; i++) {
+    if (rowArray[i] === rowArray[i + 1]) {
+      rowArray[i] = rowArray[i + 1] * 2;
+      rowArray[i + 1] = 0;
+    }
+  }
+};
 
 //button click
-//  $(".right").on("click", () => {
-//  //move right
+$(".left").on("click", () => {
+  for (let r = 0; r < game.rows; r++) {
+    let rowArray = moveLeft(game.gameBoard[r]); //move current row and set it back to current row
+    game.gameBoard[r] = rowArray; //put it back into the grid
+  }
+  updateGameBoard();
+  newTile();
+});
 
-// /*--for each row--*/
-//   for (let r = 0; r < game.rows; r++) {
-//      let row = game.gameBoard[r];
-//      row = move(row); //move current row and set it back to current row
-//      game.gameBoard[r] = row; //put it back into the grid
-//    }
-//  });
+$(".right").on("click", () => {
+  for (let r = 3; r >= 0; r--) {
+    let rowArray = moveRight(game.gameBoard[r]); //move current row and set it back to current row
+    game.gameBoard[r] = rowArray; //put it back into the grid
+  }
+  updateGameBoard();
+  newTile();
+});
 
+
+$(".down").on("click", () => {
+  const transpose = (gameBoard) => {
+    return game.gameBoard[0].map((col, c) =>
+      game.gameBoard.map((row, r) => game.gameBoard[r][c])
+    );
+  };
+  const transposedGameBoard = transpose(game.gameBoard);
+  for (let r = 0; r < game.rows; r++) {
+    let rowArray = moveDown(transposedGameBoard[r]); //move current row and set it back to current row
+    transposedGameBoard[r] = rowArray; //put it back into the grid
+  }
+  game.gameBoard = transpose(transposedGameBoard);
+  updateGameBoard();
+  newTile();
+});
+console.log(game.gameBoard);
 /* ------------------- page transition ------------------ */
 const render = () => {
   $(".page").hide();
@@ -128,7 +202,6 @@ const pageTransition = () => {
   });
 
   $(".score-button").on("click", () => {
-    console.log("score-board click");
     game.page = "#score-page";
     render();
   });
@@ -139,7 +212,6 @@ const pageTransition = () => {
   });
 
   $(".home-button").on("click", () => {
-    console.log("click home");
     game.page = "#start-page";
     render();
   });
