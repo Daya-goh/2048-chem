@@ -9,85 +9,118 @@ import "./main.css";
 /* ------------------------------------------------------ */
 const game = {
   page: "#game-page",
-  // index correspond to position of grid-cells
-  positionArray: [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
+  rows: 4,
+  columns: 4,
+  // gameBoard: [
+  //   [0, 0, 0, 0],
+  //   [0, 0, 0, 0],
+  //   [0, 0, 0, 0],
+  //   [0, 0, 0, 0],
+  // ],
+  gameBoard: [
+    [2, 2, 2, 2],
+    [4, 4, 8, 4],
+    [4, 4, 2, 2],
+    [0, 0, 16, 16],
   ],
-};
-/* ----------------- generate random tile ----------------- */
-
-/* ---- pick a random grid cell container --- */
-
-//creating a tile
-class tile {
-  constructor(atomicNum, elementName, position) {
-    this.atomicNum = atomicNum;
-    this.elementName = elementName;
-    this.position = -1;
-  }
-  newTile = () => {
-    //creating a tile div
-    let randomContainer = Math.floor(Math.random() * game.positionArray.length);
-    this.position = randomContainer;
-    console.log(randomContainer);
-    while (true) {
-      if (game.positionArray[randomContainer] === false) {
-        const $tile = $("<div>").addClass("tile");
-        $(".grid-cell").eq(randomContainer).append($tile);
-        const $atomicNum = $("<div>")
-          .addClass("atomicNum")
-          .text(this.atomicNum);
-        $tile.append($atomicNum);
-        const $elementName = $("<div>")
-          .addClass("element")
-          .text(this.elementName);
-        $atomicNum.append($elementName);
-
-        //set condition to true
-        game.positionArray[randomContainer] = true;
-        console.log(game.positionArray);
-        return;
-      } else {
-        randomContainer = Math.floor(Math.random() * game.positionArray.length);
-      }
-    }
-  };
-} //if all 9 containers are filled, the loop will not exit. must
-//account for it later.
-
-const hydrogen = new tile(1, "H");
-
-const onStart = () => {
-  hydrogen.newTile();
-  //hydrogen.newTile();
-};
-onStart();
-
-console.log(hydrogen.position);
-const helium = new tile(2, "He");
-//helium.newTile();
-/* ------------------------------------------------------ */
-/*                       game logic                       */
-/* ------------------------------------------------------ */
-//update screen
-const render = () => {
-  $(".page").hide();
-  $(game.page).show();
 };
 
 /* ------------------------------------------------------ */
 /*                        game play                       */
 /* ------------------------------------------------------ */
+const renderGameBoard = () => {
+  startTile();
+  startTile();
+  createBoard();
+};
+
+const createBoard = () => {
+  for (let r = 0; r < game.rows; r++) {
+    for (let c = 0; c < game.columns; c++) {
+      const $tile = $("<div>").attr("id", r.toString() + "-" + c.toString());
+      $tile.addClass("tile");
+      let num = game.gameBoard[r][c]; //adding numbers from gameBoard to tiles
+      $tile.addClass("x" + num);
+      if (num !== 0) {
+        $tile.text(num);
+      }
+      //$tile.text(num);
+      $(".grid-container").append($tile);
+    }
+  }
+};
+
+const startTile = () => {
+  while (true) {
+    let r = Math.round(Math.random() * 3);
+    let c = Math.round(Math.random() * 3);
+    if (game.gameBoard[r][c] === 0) {
+      game.gameBoard[r][c] = 2;
+      return;
+    } else {
+      r = Math.round(Math.random() * 3);
+      c = Math.round(Math.random() * 3);
+    }
+  }
+};
+
+const mergeTile = () => {};
+
+//move left
+// clear zero for 1 row
+const clearZeroTiles = (rowArray) => {
+  return rowArray.filter((num) => num !== 0); //return array
+};
+
+// put zero back
+const putZeroBack = (rowArray) => {
+  for (let i = 0; i < game.columns; i++) {
+    if (rowArray.length < game.columns) {
+      console.log("test");
+      rowArray.push(0);
+    }
+  }
+  return rowArray;
+};
+// console.log(putZeroBack([2, 4]));
+// reference source https://www.youtube.com/watch?v=XM2n1gu4530&t=1031s -> slide code idea/concept
+// for every row
+// clear zero for each row
+// merge
+// clear zero
+// put zero back
+const move = (rowArray) => {
+  rowArray = clearZeroTiles(rowArray);
+  for (let i = 0; i < rowArray.length - 1; i++) {
+    if (rowArray[i] === rowArray[i + 1]) {
+      rowArray[i] = rowArray[i] * 2;
+      rowArray[i + 1] = 0;
+    }
+  }
+  rowArray = clearZeroTiles(rowArray);
+  putZeroBack(rowArray);
+  return rowArray;
+};
+
+console.log(move([2, 4, 2, 2]));
+
+//button click
+//  $(".right").on("click", () => {
+//  //move right
+
+// /*--for each row--*/
+//   for (let r = 0; r < game.rows; r++) {
+//      let row = game.gameBoard[r];
+//      row = move(row); //move current row and set it back to current row
+//      game.gameBoard[r] = row; //put it back into the grid
+//    }
+//  });
 
 /* ------------------- page transition ------------------ */
+const render = () => {
+  $(".page").hide();
+  $(game.page).show();
+};
 const pageTransition = () => {
   $(".start-button").on("click", () => {
     game.page = "#game-page";
@@ -112,97 +145,6 @@ const pageTransition = () => {
   });
   render();
 };
-console.log();
+
 pageTransition();
-
-const moveDown = () => {
-  $(".down").on("click", () => {
-    console.log("click");
-    if (
-      game.positionArray[6] === true ||
-      game.positionArray[7] === true ||
-      game.positionArray[8] === true
-    ) {
-      $(".tile").appendTo($(".grid-cell").eq(hydrogen.position));
-      console.log("I cannot move");
-    } else {
-      $(".tile").appendTo($(".grid-cell").eq(hydrogen.position + 3));
-      game.positionArray[hydrogen.position] = false;
-      hydrogen.position = hydrogen.position + 3;
-      game.positionArray[hydrogen.position] = true;
-      console.log(hydrogen);
-      console.log(game.positionArray);
-    }
-  });
-};
-
-moveDown();
-
-const moveUp = () => {
-  $(".up").on("click", () => {
-    console.log("click");
-    if (
-      game.positionArray[0] === true ||
-      game.positionArray[1] === true ||
-      game.positionArray[2] === true
-    ) {
-      $(".tile").appendTo($(".grid-cell").eq(hydrogen.position));
-      console.log("I cannot move");
-    } else {
-      $(".tile").appendTo($(".grid-cell").eq(hydrogen.position - 3));
-      game.positionArray[hydrogen.position] = false;
-      hydrogen.position = hydrogen.position - 3;
-      game.positionArray[hydrogen.position] = true;
-      console.log(hydrogen);
-      console.log(game.positionArray);
-    }
-  });
-};
-
-moveUp();
-
-const moveRight = () => {
-  $(".right").on("click", () => {
-    console.log("click");
-    if (
-      game.positionArray[2] === true ||
-      game.positionArray[5] === true ||
-      game.positionArray[8] === true
-    ) {
-      $(".tile").appendTo($(".grid-cell").eq(hydrogen.position));
-      console.log("I cannot move");
-    } else {
-      $(".tile").appendTo($(".grid-cell").eq(hydrogen.position + 1));
-      game.positionArray[hydrogen.position] = false;
-      hydrogen.position = hydrogen.position + 1;
-      game.positionArray[hydrogen.position] = true;
-      console.log(hydrogen);
-      console.log(game.positionArray);
-    }
-  });
-};
-
-moveRight();
-
-const moveLeft = () => {
-  $(".left").on("click", () => {
-    console.log("click");
-    if (
-      game.positionArray[0] === true ||
-      game.positionArray[3] === true ||
-      game.positionArray[6] === true
-    ) {
-      $(".tile").appendTo($(".grid-cell").eq(hydrogen.position));
-      console.log("I cannot move");
-    } else {
-      $(".tile").appendTo($(".grid-cell").eq(hydrogen.position - 1));
-      game.positionArray[hydrogen.position] = false;
-      hydrogen.position = hydrogen.position - 1;
-      game.positionArray[hydrogen.position] = true;
-      console.log(hydrogen);
-      console.log(game.positionArray);
-    }
-  });
-};
-
-moveLeft();
+renderGameBoard();
