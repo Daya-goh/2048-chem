@@ -142,17 +142,7 @@ const moveRight = (rowArray) => {
   return rowArray;
 };
 
-
-const moveDown = (rowArray) => {
-  // https://stackoverflow.com/questions/17428587/transposing-a-2d-array-in-javascript -transposing matrix
-  rowArray = clearZeroTiles(rowArray);
-  for (let i = 0; i < rowArray.length; i++) {
-    if (rowArray[i] === rowArray[i + 1]) {
-      rowArray[i] = rowArray[i + 1] * 2;
-      rowArray[i + 1] = 0;
-    }
-  }
-};
+// https://stackoverflow.com/questions/17428587/transposing-a-2d-array-in-javascript -transposing matrix
 
 //button click
 $(".left").on("click", () => {
@@ -173,23 +163,6 @@ $(".right").on("click", () => {
   newTile();
 });
 
-
-$(".down").on("click", () => {
-  const transpose = (gameBoard) => {
-    return game.gameBoard[0].map((col, c) =>
-      game.gameBoard.map((row, r) => game.gameBoard[r][c])
-    );
-  };
-  const transposedGameBoard = transpose(game.gameBoard);
-  for (let r = 0; r < game.rows; r++) {
-    let rowArray = moveDown(transposedGameBoard[r]); //move current row and set it back to current row
-    transposedGameBoard[r] = rowArray; //put it back into the grid
-  }
-  game.gameBoard = transpose(transposedGameBoard);
-  updateGameBoard();
-  newTile();
-});
-console.log(game.gameBoard);
 /* ------------------- page transition ------------------ */
 const render = () => {
   $(".page").hide();
