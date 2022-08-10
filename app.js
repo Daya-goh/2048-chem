@@ -11,18 +11,18 @@ const game = {
   page: "#game-page",
   rows: 4,
   columns: 4,
+  // gameBoard: [
+  //   [0, 0, 0, 0],
+  //   [0, 0, 0, 0],
+  //   [0, 0, 0, 0],
+  //   [0, 0, 0, 0],
+  // ],
   gameBoard: [
     [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
+    [2, 8, 16, 32],
+    [8, 16, 32, 64],
+    [16, 32, 64, 128],
   ],
-  // gameBoard: [
-  //   [2, 4, 8, 16],
-  //   [4, 4, 8, 4],
-  //   [4, 4, 2, 2],
-  //   [0, 0, 16, 16],
-  // ],
 };
 
 /* ------------------------------------------------------ */
@@ -48,6 +48,7 @@ const createBoard = () => {
       $(".grid-container").append($tile);
     }
   }
+  //countZero(game.gameBoard);
 };
 
 const updateGameBoard = () => {
@@ -65,27 +66,65 @@ const updateGameBoard = () => {
       }
     }
   }
+  //countZero(game.gameBoard);
+  //checkForLastContainer();
 };
 
+const checkForGameOver = () => {
+  //when all containers are filled 
+  //all tiles cannot merge
+  //you lose 
+};
+
+const countZero = (gameBoard) => {
+  let numOfZero = 0;
+  for (let r = 0; r < game.rows; r++) {
+    for (let c = 0; c < game.columns; c++) {
+      if (game.gameBoard[r][c] === 0) {
+        numOfZero++;
+      }
+    }
+  }
+  //console.log(numOfZero);
+  return numOfZero;
+};
+
+const newTile = () => {
+  let end = true;
+  while (end) {
+    let r = Math.round(Math.random() * 3);
+    let c = Math.round(Math.random() * 3);
+    if (countZero(game.gameBoard) === 1) {
+      console.log("index 0-0 " + game.gameBoard[0][0]);
+
+      game.gameBoard[0][0] = 1;
+      $("#0-0").addClass("x1").text(1);
+
+      console.log("end1");
+      console.log(game.gameBoard);
+      end = false;
+      //return
+      // }
+    } else {
+      if (game.gameBoard[r][c] === 0) {
+        game.gameBoard[r][c] = 1;
+
+        return;
+      } else {
+        r = Math.round(Math.random() * 3);
+        c = Math.round(Math.random() * 3);
+      }
+    }
+    // if tiles left is 1, end the loop
+  }
+  console.log("ended");
+};
+/* ------------------------------------------------------------------------------------- */
 // https://stackoverflow.com/questions/17428587/transposing-a-2d-array-in-javascript -transposing matrix
 const transpose = (gameBoardArray) => {
   return gameBoardArray[0].map((col, c) =>
     gameBoardArray.map((row, r) => gameBoardArray[r][c])
   );
-};
-
-const newTile = () => {
-  while (true) {
-    let r = Math.round(Math.random() * 3);
-    let c = Math.round(Math.random() * 3);
-    if (game.gameBoard[r][c] === 0) {
-      game.gameBoard[r][c] = 1;
-      return;
-    } else {
-      r = Math.round(Math.random() * 3);
-      c = Math.round(Math.random() * 3);
-    }
-  }
 };
 
 //move left
@@ -181,7 +220,6 @@ const moveUp = (rowArray) => {
 
 /* -------------------- button click -------------------- */
 $(".up").on("click", () => {
-  console.log("click");
   const newBoard = transpose(game.gameBoard);
   for (let r = 0; r < game.rows; r++) {
     let rowArray = moveUp(newBoard[r]); //move current row and set it back to current row
