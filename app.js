@@ -14,7 +14,7 @@ const renderGameBoard = () => {
   createElement();
 };
 const game = {
-  page: "#game-page",
+  page: "#start-page",
   rows: 4,
   columns: 4,
   gameBoard: [
