@@ -42,7 +42,7 @@ Use your arrow keys to move the tiles. Tiles with the same element merge into on
 
 ### WireFrame
 
-Before coding the game, I planned out the design and the possible logic for the game. This helps to break down the project into managebable parts and also plan out the possible codes/functions needed. 
+Before coding the game, I planned out the design and the possible logic for the game. This helps to break down the project into manageable parts and also plan out the possible codes/functions needed. 
 
 <img width="1170" alt="Screenshot 2022-08-11 at 4 54 47 PM" src="https://user-images.githubusercontent.com/108121984/184098402-9f5dc87c-73a7-46d1-a2a0-1e4546a39b55.png">
 
@@ -63,6 +63,9 @@ Initially, I approached the shifting of the tiles using the appending and reappe
 
 <img width="653" alt="Screenshot 2022-08-11 at 5 27 00 PM" src="https://user-images.githubusercontent.com/108121984/184103916-00765a61-5774-47cf-9e29-54796e201564.png">
 
+<img width="649" alt="sliding code part 2" src="https://user-images.githubusercontent.com/108121984/184121674-0b925803-c8d0-4f07-bca3-3f776e1166e2.png">
+
+
 ### Key Learning and AFI
 
 #### Approach and Process
@@ -76,6 +79,6 @@ This game is based on a grid board design and hence I have a gameboard array to 
 <img width="798" alt="Screenshot 2022-08-11 at 7 00 11 PM" src="https://user-images.githubusercontent.com/108121984/184119232-e8941523-76ca-4455-80d1-ba6f3a89ee0a.png">
 
 #### SEI Post Mortem
-As part of what I have learned, I modularised my code by using functions for repeated lines of code. It helps to organise the codes into readable sections for maintaining and debugging. For this game, I need to create many elements, and learning about the class methods is really helpful as it makes the process of creating 40 elements more systematic.
+As part of what I have learned, I modularised my code by using functions for repeated lines of code. It helped to organise the codes into readable sections for maintaining and debugging. For this game, I needed to create many elements, and learning about the class methods was really helpful as it made the process of creating 40 elements more systematic.
 
 <img width="843" alt="Screenshot 2022-08-11 at 7 01 07 PM" src="https://user-images.githubusercontent.com/108121984/184119428-f519260b-a4fa-40d0-af85-d9afe4d539f9.png">
