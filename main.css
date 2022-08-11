@@ -40,6 +40,11 @@ button {
   margin-top: 50px;
 }
 
+button:hover {
+  background-color: #f88379;
+  transition: 0.3s;
+}
+
 .upDown {
   display: flex;
   flex-direction: column;
