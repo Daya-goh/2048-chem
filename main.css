@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap" rel="stylesheet"');
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Marker+Hatch&display=swap" rel="stylesheet');
+
 body {
   background-color: white;
 }
@@ -16,22 +19,31 @@ body {
   align-items: center;
 }
 .title-name {
-  font-size: 50px;
+  font-size: 100px;
+  font-family: 'Rubik Marker Hatch', cursive;
 }
 .title-description {
-  font-size: 15px;
-  font-family: fantasy;
+  font-size: 18px;
+  font-family: "Poppins", sans-serif;
 }
 
 button {
   font-family: monospace;
-  font-size: 20px;
+  font-size: 30px;
   background-color: floralwhite;
   border-radius: 5px;
   border-color: black;
   margin: 20px;
 }
 
+.upDown {
+  display: flex;
+  flex-direction: column;
+}
+.buttons-layout {
+  display: flex;
+  flex-direction: row;
+}
 /* game board page */
 
 .game {
@@ -40,8 +52,9 @@ button {
   align-items: center;
 }
 .game-description {
-  font-size: 10px;
-  font-family: fantasy;
+  font-size: 20px;
+  font-family: "Poppins", sans-serif;
+  margin: 20px;
 }
 .game-board {
   display: flex;
@@ -103,18 +116,23 @@ li {
 }
 
 .element {
-  width: 72%;
-  font-size: 30px;
-  line-height: 70px;
-  text-align: center;
+  width: 100%;
+  height: 100%;
 }
 .atomicNum {
   display: flex;
+  flex-direction: column;
   text-align: left;
-  height: 70px;
-  font-size: 15px;
+  height: 100%;
+  font-size: 23px;
   padding-left: 3px;
 }
+
+.elementName {
+  font-size: 50px;
+  text-align: center;
+}
+/* ---------------------- elements ---------------------- */
 
 .x1 {
   /* Hydrogen[1] */
@@ -124,39 +142,186 @@ li {
   /* Helium[2] */
   background-color: #add8e6;
 }
-.x4 {
+.x3 {
   /* Lithium[3] */
   background-color: #c4d8e2;
 }
-.x8 {
+.x4 {
   /* Beryllium[4] */
   background-color: #b0c4de;
 }
 
-.x16 {
+.x5 {
   /* Boron[5] */
   background-color: #9bc4e2;
 }
-.x32 {
+.x6 {
   /* Carbon[6] */
   background-color: #7ea4b3;
 }
-.x64 {
+.x7 {
   /* Nitrogen[7] */
   background-color: #aec6cf;
 }
 
-.x128 {
+.x8 {
   /* Oxygen[8] */
   background-color: #b4c4c9;
 }
 
-.x256 {
+.x9 {
   /* Fluorine[9] */
   background-color: #bac1c4;
 }
 
-.x512 {
+.x10 {
   /* Neon[10] */
   background-color: #c0bfbe;
+}
+
+.x11 {
+  /* Sodium[11] */
+  background-color: #c5bdb9;
+}
+
+.x12 {
+  /* Magnesium[12] */
+  background-color: #cabab3;
+}
+
+.x13 {
+  /* Aluminum[13] */
+  background-color: #cfb8ae;
+}
+
+.x14 {
+  /* Silicon[14] */
+  background-color: #d1bea8;
+}
+
+.x15 {
+  /* Phosphorus[15] */
+  background-color: #c4aead;
+}
+
+.x16 {
+  /* Sulfur[16] */
+  background-color: #c9c0bb;
+}
+
+.x17 {
+  /* Sulfur[17] */
+  background-color: #c6c2b6;
+}
+
+.x18 {
+  /* Argon[18] */
+  background-color: #ebc2af;
+}
+
+.x19 {
+  /* Potassium[19] */
+  background-color: #edc9af;
+}
+
+.x20 {
+  /* Calcium[20] */
+  background-color: #e7c9a9;
+}
+
+.x21 {
+  /* Scandium[21] */
+  background-color: #e2be9f;
+}
+
+.x22 {
+  /* Titanium[22] */
+  background-color: #fbceb1;
+}
+
+.x23 {
+  /* Vanadium[23] */
+  background-color: #fcc9b9;
+}
+
+.x24 {
+  /* Chromium[24] */
+  background-color: #f7ccbf;
+}
+
+.x25 {
+  /* Manganese[25] */
+  background-color: #f2cfc4;
+}
+
+.x26 {
+  /* Iron[26] */
+  background-color: #edd2ca;
+}
+.x27 {
+  /* Cobalt[27] */
+  background-color: #e7d5d0;
+}
+
+.x28 {
+  /* Nickel[28] */
+  background-color: #e1d8d5;
+}
+.x29 {
+  /* Copper[29] */
+  background-color: #dbdbdb;
+}
+.x30 {
+  /* Zinc[30] */
+  background-color: #caebdc;
+}
+
+.x31 {
+  /* Gallium[31] */
+  background-color: #c9ffe5;
+}
+
+.x32 {
+  /* Germanium[32] */
+  background-color: #aaf0d1;
+}
+
+.x33 {
+  /* Arsenic[33] */
+  background-color: #9fe2bf;
+}
+
+.x34 {
+  /* Selenium[34] */
+  background-color: #a0d6b4;
+}
+
+.x35 {
+  /* Bromine[35] */
+  background-color: #88d8c0;
+}
+
+.x36 {
+  /* Krypton[36] */
+  background-color: #d0f0c0;
+}
+
+.x37 {
+  /* Rubidium[37] */
+  background-color: #f88379;
+}
+
+.x38 {
+  /* Strontium[38] */
+  background-color: #9966cc;
+}
+
+.x39 {
+  /* Yttrium[39] */
+  background-color: #fff44f;
+}
+
+.x40 {
+  /* Zirconium[40] */
+  background-color: #f2003c;
 }

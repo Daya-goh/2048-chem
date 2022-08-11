@@ -11,23 +11,24 @@ const renderGameBoard = () => {
   newTile();
   newTile();
   createBoard();
+  createElement();
 };
 const game = {
   page: "#game-page",
   rows: 4,
   columns: 4,
-  // gameBoard: [
-  //   [0, 0, 0, 0],
-  //   [0, 0, 0, 0],
-  //   [0, 0, 0, 0],
-  //   [0, 0, 0, 0],
-  // ],
   gameBoard: [
     [0, 0, 0, 0],
-    [2, 8, 16, 32],
-    [8, 16, 32, 64],
-    [16, 32, 64, 128],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
   ],
+  // gameBoard: [
+  //   [0, 0, 0, 0],
+  //   [2, 8, 16, 32],
+  //   [8, 16, 32, 64],
+  //   [16, 32, 64, 128],
+  // ],
 };
 
 /* --------------------- game board --------------------- */
@@ -38,9 +39,9 @@ const createBoard = () => {
       $tile.addClass("tile");
       let num = game.gameBoard[r][c]; //adding numbers from gameBoard to tiles
       $tile.addClass("x" + num);
-      if (num !== 0) {
-        $tile.text(num);
-      }
+      // if (num !== 0) {
+      //   $tile.text(num);
+      // }
       $(".grid-container").append($tile);
     }
   }
@@ -53,15 +54,91 @@ const updateGameBoard = () => {
   for (let r = 0; r < game.rows; r++) {
     for (let c = 0; c < game.columns; c++) {
       if (game.gameBoard[r][c] > 0) {
-        $("#" + r.toString() + "-" + c.toString()).text(game.gameBoard[r][c]);
-
+        $("#" + r.toString() + "-" + c.toString()); //.text(game.gameBoard[r][c]);
         $("#" + r.toString() + "-" + c.toString()).addClass(
           "x" + game.gameBoard[r][c].toString()
         );
       }
     }
   }
+  createElement();
   checkForGameOver();
+};
+
+/* ------------------ creating elements ----------------- */
+
+class element {
+  constructor(atomicNum, elementName) {
+    this.atomicNum = atomicNum;
+    this.elementName = elementName;
+
+    //creating a tile face div
+    const $element = $("<div>").addClass("element");
+
+    const $atomicNum = $("<div>").addClass("atomicNum").text(this.atomicNum);
+    $element.append($atomicNum);
+    const $elementName = $("<div>")
+      .addClass("elementName")
+      .text(this.elementName);
+    $atomicNum.append($elementName);
+
+    for (let r = 0; r < game.rows; r++) {
+      for (let c = 0; c < game.columns; c++) {
+        $(".x" + this.atomicNum.toString()).append($element);
+        return;
+      }
+    }
+  }
+}
+
+const elements = [
+  { atomicNum: 1, elementName: "H" },
+  { atomicNum: 2, elementName: "He" },
+  { atomicNum: 3, elementName: "Li" },
+  { atomicNum: 4, elementName: "Be" },
+  { atomicNum: 5, elementName: "B" },
+  { atomicNum: 6, elementName: "C" },
+  { atomicNum: 7, elementName: "N" },
+  { atomicNum: 8, elementName: "O" },
+  { atomicNum: 9, elementName: "F" },
+  { atomicNum: 10, elementName: "Ne" },
+  { atomicNum: 11, elementName: "Na" },
+  { atomicNum: 12, elementName: "Mg" },
+  { atomicNum: 13, elementName: "Al" },
+  { atomicNum: 14, elementName: "Si" },
+  { atomicNum: 15, elementName: "P" },
+  { atomicNum: 16, elementName: "S" },
+  { atomicNum: 17, elementName: "Cl" },
+  { atomicNum: 18, elementName: "Ar" },
+  { atomicNum: 19, elementName: "K" },
+  { atomicNum: 20, elementName: "Ca" },
+  { atomicNum: 21, elementName: "Sc" },
+  { atomicNum: 22, elementName: "Ti" },
+  { atomicNum: 23, elementName: "V" },
+  { atomicNum: 24, elementName: "Cr" },
+  { atomicNum: 25, elementName: "Mn" },
+  { atomicNum: 26, elementName: "Fe" },
+  { atomicNum: 27, elementName: "Co" },
+  { atomicNum: 28, elementName: "Ni" },
+  { atomicNum: 29, elementName: "Cu" },
+  { atomicNum: 30, elementName: "Zn" },
+  { atomicNum: 31, elementName: "Ga" },
+  { atomicNum: 32, elementName: "Ge" },
+  { atomicNum: 33, elementName: "As" },
+  { atomicNum: 34, elementName: "Se" },
+  { atomicNum: 35, elementName: "Br" },
+  { atomicNum: 36, elementName: "Kr" },
+  { atomicNum: 37, elementName: "Rb" },
+  { atomicNum: 38, elementName: "Sr" },
+  { atomicNum: 39, elementName: "Y" },
+  { atomicNum: 40, elementName: "Zr" },
+];
+console.log(elements[0]);
+
+const createElement = () => {
+  for (let i = 0; i < elements.length; i++) {
+    new element(elements[i].atomicNum, elements[i].elementName);
+  }
 };
 
 /* --------------- checking for game over --------------- */
@@ -202,7 +279,7 @@ const moveLeft = (rowArray) => {
 
   for (let i = 0; i < rowArray.length; i++) {
     if (rowArray[i] === rowArray[i + 1]) {
-      rowArray[i] = rowArray[i + 1] * 2;
+      rowArray[i] = rowArray[i + 1] + 1;
       rowArray[i + 1] = 0;
     }
   }
@@ -226,7 +303,7 @@ const moveRight = (rowArray) => {
 
   for (let i = rowArray.length; i > 0; i--) {
     if (rowArray[i] === rowArray[i - 1]) {
-      rowArray[i] = rowArray[i - 1] * 2;
+      rowArray[i] = rowArray[i - 1] + 1;
       rowArray[i - 1] = 0;
     }
   }
@@ -250,7 +327,7 @@ const moveDown = (rowArray) => {
   rowArray = clearZeroTiles(rowArray);
   for (let i = rowArray.length; i > 0; i--) {
     if (rowArray[i] === rowArray[i - 1]) {
-      rowArray[i] = rowArray[i - 1] * 2;
+      rowArray[i] = rowArray[i - 1] + 1;
       rowArray[i - 1] = 0;
     }
   }
@@ -277,7 +354,7 @@ const moveUp = (rowArray) => {
 
   for (let i = 0; i < rowArray.length; i++) {
     if (rowArray[i] === rowArray[i + 1]) {
-      rowArray[i] = rowArray[i + 1] * 2;
+      rowArray[i] = rowArray[i + 1] + 1;
       rowArray[i + 1] = 0;
     }
   }
