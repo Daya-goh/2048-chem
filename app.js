@@ -1,4 +1,4 @@
-import $ from "jquery";
+import $, { event } from "jquery";
 console.log($);
 import "./main.css";
 
@@ -26,9 +26,51 @@ const game = {
   // gameBoard: [
   //   [0, 0, 0, 0],
   //   [2, 8, 16, 32],
-  //   [8, 16, 32, 64],
-  //   [16, 32, 64, 128],
+  //   [8, 16, 32, 40],
+  //   [16, 32, 33, 39],
   // ],
+  elements: [
+    { atomicNum: 1, elementName: "H" },
+    { atomicNum: 2, elementName: "He" },
+    { atomicNum: 3, elementName: "Li" },
+    { atomicNum: 4, elementName: "Be" },
+    { atomicNum: 5, elementName: "B" },
+    { atomicNum: 6, elementName: "C" },
+    { atomicNum: 7, elementName: "N" },
+    { atomicNum: 8, elementName: "O" },
+    { atomicNum: 9, elementName: "F" },
+    { atomicNum: 10, elementName: "Ne" },
+    { atomicNum: 11, elementName: "Na" },
+    { atomicNum: 12, elementName: "Mg" },
+    { atomicNum: 13, elementName: "Al" },
+    { atomicNum: 14, elementName: "Si" },
+    { atomicNum: 15, elementName: "P" },
+    { atomicNum: 16, elementName: "S" },
+    { atomicNum: 17, elementName: "Cl" },
+    { atomicNum: 18, elementName: "Ar" },
+    { atomicNum: 19, elementName: "K" },
+    { atomicNum: 20, elementName: "Ca" },
+    { atomicNum: 21, elementName: "Sc" },
+    { atomicNum: 22, elementName: "Ti" },
+    { atomicNum: 23, elementName: "V" },
+    { atomicNum: 24, elementName: "Cr" },
+    { atomicNum: 25, elementName: "Mn" },
+    { atomicNum: 26, elementName: "Fe" },
+    { atomicNum: 27, elementName: "Co" },
+    { atomicNum: 28, elementName: "Ni" },
+    { atomicNum: 29, elementName: "Cu" },
+    { atomicNum: 30, elementName: "Zn" },
+    { atomicNum: 31, elementName: "Ga" },
+    { atomicNum: 32, elementName: "Ge" },
+    { atomicNum: 33, elementName: "As" },
+    { atomicNum: 34, elementName: "Se" },
+    { atomicNum: 35, elementName: "Br" },
+    { atomicNum: 36, elementName: "Kr" },
+    { atomicNum: 37, elementName: "Rb" },
+    { atomicNum: 38, elementName: "Sr" },
+    { atomicNum: 39, elementName: "Y" },
+    { atomicNum: 40, elementName: "Zr" },
+  ],
 };
 
 /* --------------------- game board --------------------- */
@@ -54,7 +96,7 @@ const updateGameBoard = () => {
   for (let r = 0; r < game.rows; r++) {
     for (let c = 0; c < game.columns; c++) {
       if (game.gameBoard[r][c] > 0) {
-        $("#" + r.toString() + "-" + c.toString()); //.text(game.gameBoard[r][c]);
+        $("#" + r.toString() + "-" + c.toString());
         $("#" + r.toString() + "-" + c.toString()).addClass(
           "x" + game.gameBoard[r][c].toString()
         );
@@ -91,69 +133,29 @@ class element {
   }
 }
 
-const elements = [
-  { atomicNum: 1, elementName: "H" },
-  { atomicNum: 2, elementName: "He" },
-  { atomicNum: 3, elementName: "Li" },
-  { atomicNum: 4, elementName: "Be" },
-  { atomicNum: 5, elementName: "B" },
-  { atomicNum: 6, elementName: "C" },
-  { atomicNum: 7, elementName: "N" },
-  { atomicNum: 8, elementName: "O" },
-  { atomicNum: 9, elementName: "F" },
-  { atomicNum: 10, elementName: "Ne" },
-  { atomicNum: 11, elementName: "Na" },
-  { atomicNum: 12, elementName: "Mg" },
-  { atomicNum: 13, elementName: "Al" },
-  { atomicNum: 14, elementName: "Si" },
-  { atomicNum: 15, elementName: "P" },
-  { atomicNum: 16, elementName: "S" },
-  { atomicNum: 17, elementName: "Cl" },
-  { atomicNum: 18, elementName: "Ar" },
-  { atomicNum: 19, elementName: "K" },
-  { atomicNum: 20, elementName: "Ca" },
-  { atomicNum: 21, elementName: "Sc" },
-  { atomicNum: 22, elementName: "Ti" },
-  { atomicNum: 23, elementName: "V" },
-  { atomicNum: 24, elementName: "Cr" },
-  { atomicNum: 25, elementName: "Mn" },
-  { atomicNum: 26, elementName: "Fe" },
-  { atomicNum: 27, elementName: "Co" },
-  { atomicNum: 28, elementName: "Ni" },
-  { atomicNum: 29, elementName: "Cu" },
-  { atomicNum: 30, elementName: "Zn" },
-  { atomicNum: 31, elementName: "Ga" },
-  { atomicNum: 32, elementName: "Ge" },
-  { atomicNum: 33, elementName: "As" },
-  { atomicNum: 34, elementName: "Se" },
-  { atomicNum: 35, elementName: "Br" },
-  { atomicNum: 36, elementName: "Kr" },
-  { atomicNum: 37, elementName: "Rb" },
-  { atomicNum: 38, elementName: "Sr" },
-  { atomicNum: 39, elementName: "Y" },
-  { atomicNum: 40, elementName: "Zr" },
-];
-console.log(elements[0]);
-
 const createElement = () => {
-  for (let i = 0; i < elements.length; i++) {
-    new element(elements[i].atomicNum, elements[i].elementName);
+  for (let i = 0; i < game.elements.length; i++) {
+    new element(game.elements[i].atomicNum, game.elements[i].elementName);
   }
 };
 
+let gameNotOver = true;
 /* --------------- checking for game over --------------- */
 const checkForGameOver = () => {
   //when all containers are filled
   if (checkZero(game.gameBoard) === 0 && !(checkColumn() || checkRow())) {
     //if any checkColumn or checkRow is true, ! will make it false
-    alert("You lose!");
-    $(".left").prop("disabled", true);
-    $(".right").prop("disabled", true);
-    $(".up").prop("disabled", true);
-    $(".down").prop("disabled", true);
+    setTimeout(function () {
+      alert("You lose!");
+    }, 100);
+    //onKeyDown(event);
+    gameNotOver = false;
   }
 };
 
+// const onKeyDown = (event) => {
+//   event.preventDefault();
+// };
 const checkRow = () => {
   let validMove = false;
   for (let c = 0; c < game.columns; c++) {
@@ -273,8 +275,9 @@ const transpose = (gameBoardArray) => {
   );
 };
 
-/* ---------------------- move left --------------------- */
-const moveLeft = (rowArray) => {
+/* ------------------------ slide ----------------------- */
+
+const slideLeft = (rowArray) => {
   rowArray = clearZeroTiles(rowArray);
 
   for (let i = 0; i < rowArray.length; i++) {
@@ -288,17 +291,8 @@ const moveLeft = (rowArray) => {
   putZeroBack(rowArray, "moveLeft");
   return rowArray;
 };
-$(".left").on("click", () => {
-  for (let r = 0; r < game.rows; r++) {
-    let rowArray = moveLeft(game.gameBoard[r]); //move current row and set it back to current row
-    game.gameBoard[r] = rowArray; //put it back into the grid
-  }
-  newTile();
-  updateGameBoard();
-});
 
-/* --------------------- move right --------------------- */
-const moveRight = (rowArray) => {
+const slideRight = (rowArray) => {
   rowArray = clearZeroTiles(rowArray);
 
   for (let i = rowArray.length; i > 0; i--) {
@@ -313,17 +307,7 @@ const moveRight = (rowArray) => {
   return rowArray;
 };
 
-$(".right").on("click", () => {
-  for (let r = game.rows - 1; r >= 0; r--) {
-    let rowArray = moveRight(game.gameBoard[r]); //move current row and set it back to current row
-    game.gameBoard[r] = rowArray; //put it back into the grid
-  }
-  newTile();
-  updateGameBoard();
-});
-
-/* ---------------------- move down --------------------- */
-const moveDown = (rowArray) => {
+const slideDown = (rowArray) => {
   rowArray = clearZeroTiles(rowArray);
   for (let i = rowArray.length; i > 0; i--) {
     if (rowArray[i] === rowArray[i - 1]) {
@@ -337,19 +321,7 @@ const moveDown = (rowArray) => {
   return rowArray;
 };
 
-$(".down").on("click", () => {
-  const newBoard = transpose(game.gameBoard);
-  for (let r = 3; r >= 0; r--) {
-    let rowArray = moveDown(newBoard[r]); //move current row and set it back to current row
-    newBoard[r] = rowArray;
-    game.gameBoard = transpose(newBoard); //put it back into the grid
-  }
-  newTile();
-  updateGameBoard();
-});
-
-/* ----------------------- move up ---------------------- */
-const moveUp = (rowArray) => {
+const slideUp = (rowArray) => {
   rowArray = clearZeroTiles(rowArray);
 
   for (let i = 0; i < rowArray.length; i++) {
@@ -363,17 +335,54 @@ const moveUp = (rowArray) => {
   putZeroBack(rowArray, "moveUp");
   return rowArray;
 };
+/* ------------------------------------------------------ */
+window.addEventListener("keydown", (e) => {
+  if (gameNotOver) {
+    switch (e.code) {
+      case "ArrowLeft":
+        for (let r = 0; r < game.rows; r++) {
+          let rowArray = slideLeft(game.gameBoard[r]); //move current row and set it back to current row
+          game.gameBoard[r] = rowArray; //put it back into the grid
+        }
+        newTile();
+        updateGameBoard();
 
-$(".up").on("click", () => {
-  const newBoard = transpose(game.gameBoard);
-  for (let r = 0; r < game.rows; r++) {
-    let rowArray = moveUp(newBoard[r]); //move current row and set it back to current row
-    newBoard[r] = rowArray;
-    game.gameBoard = transpose(newBoard); //put it back into the grid
+        break;
+
+      case "ArrowRight":
+        for (let r = game.rows - 1; r >= 0; r--) {
+          let rowArray = slideRight(game.gameBoard[r]); //move current row and set it back to current row
+          game.gameBoard[r] = rowArray; //put it back into the grid
+        }
+        newTile();
+        updateGameBoard();
+        break;
+
+      case "ArrowDown":
+        const newBoard = transpose(game.gameBoard);
+        for (let r = 3; r >= 0; r--) {
+          let rowArray = slideDown(newBoard[r]); //move current row and set it back to current row
+          newBoard[r] = rowArray;
+          game.gameBoard = transpose(newBoard); //put it back into the grid
+        }
+        newTile();
+        updateGameBoard();
+        break;
+
+      case "ArrowUp":
+        const newBoard2 = transpose(game.gameBoard);
+        for (let r = 0; r < game.rows; r++) {
+          let rowArray = slideUp(newBoard2[r]); //move current row and set it back to current row
+          newBoard2[r] = rowArray;
+          game.gameBoard = transpose(newBoard); //put it back into the grid
+        }
+        newTile();
+        updateGameBoard();
+        break;
+    }
   }
-  newTile();
-  updateGameBoard();
 });
+
 /* -------------------- reset button -------------------- */
 $(".reset-button").on("click", () => {
   game.gameBoard = [
@@ -382,11 +391,6 @@ $(".reset-button").on("click", () => {
     [0, 0, 0, 0],
     [0, 0, 0, 0],
   ];
-
-  $(".left").prop("disabled", false);
-  $(".right").prop("disabled", false);
-  $(".up").prop("disabled", false);
-  $(".down").prop("disabled", false);
 
   newTile();
   newTile();
