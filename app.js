@@ -299,9 +299,21 @@ $(".up").on("click", () => {
 });
 /* -------------------- reset button -------------------- */
 $(".reset-button").on("click", () => {
-  //reset game board to zero
-  //activate all buttons
-  //update board
+  game.gameBoard = [
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+  ];
+
+  $(".left").prop("disabled", false);
+  $(".right").prop("disabled", false);
+  $(".up").prop("disabled", false);
+  $(".down").prop("disabled", false);
+
+  newTile();
+  newTile();
+  updateGameBoard();
 });
 /* ------------------- page transition ------------------ */
 const render = () => {
