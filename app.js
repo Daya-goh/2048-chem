@@ -71,6 +71,7 @@ const game = {
     { atomicNum: 39, elementName: "Y" },
     { atomicNum: 40, elementName: "Zr" },
   ],
+  gameNotOver: true,
 };
 
 /* --------------------- game board --------------------- */
@@ -139,7 +140,6 @@ const createElement = () => {
   }
 };
 
-let gameNotOver = true;
 /* --------------- checking for game over --------------- */
 const checkForGameOver = () => {
   //when all containers are filled
@@ -149,7 +149,7 @@ const checkForGameOver = () => {
       alert("You lose!");
     }, 100);
     //onKeyDown(event);
-    gameNotOver = false;
+    game.gameNotOver = false;
   }
 };
 
@@ -240,12 +240,13 @@ const newTile = () => {
 /* ------------------------------------------------------ */
 /*                        game play                       */
 /* ------------------------------------------------------ */
+
+/* --------------------- clear zeros -------------------- */
 const clearZeroTiles = (rowArray) => {
   return rowArray.filter((num) => num !== 0); //return array
 };
 
-//put zero back
-
+/* -------------------- put zero back ------------------- */
 const putZeroBack = (rowArray, arrayMovement) => {
   for (let i = 0; i < game.columns; i++) {
     if (rowArray.length < game.columns) {
@@ -267,8 +268,7 @@ const putZeroBack = (rowArray, arrayMovement) => {
   }
   return rowArray;
 };
-
-// https://stackoverflow.com/questions/17428587/transposing-a-2d-array-in-javascript -transposing matrix
+/* ------------------ transposing board ----------------- */
 const transpose = (gameBoardArray) => {
   return gameBoardArray[0].map((col, c) =>
     gameBoardArray.map((row, r) => gameBoardArray[r][c])
@@ -337,7 +337,7 @@ const slideUp = (rowArray) => {
 };
 /* ------------------------------------------------------ */
 window.addEventListener("keydown", (e) => {
-  if (gameNotOver) {
+  if (game.gameNotOver) {
     switch (e.code) {
       case "ArrowLeft":
         for (let r = 0; r < game.rows; r++) {
@@ -391,7 +391,7 @@ $(".reset-button").on("click", () => {
     [0, 0, 0, 0],
     [0, 0, 0, 0],
   ];
-
+  game.gameNotOver = true;
   newTile();
   newTile();
   updateGameBoard();
