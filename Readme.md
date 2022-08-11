@@ -1,6 +1,6 @@
 # 2048-chem
 
-## Project Brief 
+### Project Brief 
 
 MVP - Minimum Viable Product
 
