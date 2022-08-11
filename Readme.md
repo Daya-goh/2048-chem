@@ -63,6 +63,9 @@ Initially, I approached the shifting of the tiles using the appending and reappe
 
 <img width="653" alt="Screenshot 2022-08-11 at 5 27 00 PM" src="https://user-images.githubusercontent.com/108121984/184103916-00765a61-5774-47cf-9e29-54796e201564.png">
 
+<img width="649" alt="sliding code part 2" src="https://user-images.githubusercontent.com/108121984/184121674-0b925803-c8d0-4f07-bca3-3f776e1166e2.png">
+
+
 ### Key Learning and AFI
 
 #### Approach and Process
