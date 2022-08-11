@@ -26,7 +26,7 @@ const game = {
   // gameBoard: [
   //   [0, 0, 0, 0],
   //   [2, 8, 16, 32],
-  //   [8, 16, 32, 40],
+  //   [8, 16, 32, 39],
   //   [16, 32, 33, 39],
   // ],
   elements: [
@@ -105,6 +105,7 @@ const updateGameBoard = () => {
     }
   }
   createElement();
+  checkForWin();
   checkForGameOver();
 };
 
@@ -153,9 +154,20 @@ const checkForGameOver = () => {
   }
 };
 
-// const onKeyDown = (event) => {
-//   event.preventDefault();
-// };
+/* ----------------- check for game win ----------------- */
+const checkForWin = () => {
+  for (let r = 0; r < game.rows; r++) {
+    for (let c = 0; c < game.columns; c++) {
+      if (game.gameBoard[r][c] === 40) {
+        setTimeout(function () {
+          alert("You win!");
+        }, 100);
+      }
+    }
+  }
+};
+
+/* ------------------------------------------------------ */
 const checkRow = () => {
   let validMove = false;
   for (let c = 0; c < game.columns; c++) {
@@ -279,14 +291,12 @@ const transpose = (gameBoardArray) => {
 
 const slideLeft = (rowArray) => {
   rowArray = clearZeroTiles(rowArray);
-
   for (let i = 0; i < rowArray.length; i++) {
     if (rowArray[i] === rowArray[i + 1]) {
       rowArray[i] = rowArray[i + 1] + 1;
       rowArray[i + 1] = 0;
     }
   }
-
   rowArray = clearZeroTiles(rowArray);
   putZeroBack(rowArray, "moveLeft");
   return rowArray;
