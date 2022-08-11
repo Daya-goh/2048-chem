@@ -65,6 +65,7 @@ Initially, I approached the shifting of the tiles using the appending and reappe
 
 <img width="649" alt="sliding code part 2" src="https://user-images.githubusercontent.com/108121984/184121674-0b925803-c8d0-4f07-bca3-3f776e1166e2.png">
 
+https://github.com/Daya-goh/2048-chem/blob/66f8979040f6ee6e62a34a06adb04bf0a6f981d4/Resources/My%20Video.gif
 
 ### Key Learning and AFI
 
