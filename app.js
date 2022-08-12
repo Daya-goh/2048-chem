@@ -370,7 +370,7 @@ window.addEventListener("keydown", (e) => {
 
       case "ArrowDown":
         const newBoard = transpose(game.gameBoard);
-        for (let r = 3; r >= 0; r--) {
+        for (let r = game.rows - 1; r >= 0; r--) {
           let rowArray = slideDown(newBoard[r]); //move current row and set it back to current row
           newBoard[r] = rowArray;
           game.gameBoard = transpose(newBoard); //put it back into the grid
@@ -384,12 +384,61 @@ window.addEventListener("keydown", (e) => {
         for (let r = 0; r < game.rows; r++) {
           let rowArray = slideUp(newBoard2[r]); //move current row and set it back to current row
           newBoard2[r] = rowArray;
-          game.gameBoard = transpose(newBoard); //put it back into the grid
+          game.gameBoard = transpose(newBoard2); //put it back into the grid
         }
         newTile();
         updateGameBoard();
         break;
     }
+  }
+});
+
+/* ----------------------- buttons ---------------------- */
+$(".left").on("click", () => {
+  if (game.gameNotOver) {
+    for (let r = 0; r < game.rows; r++) {
+      let rowArray = slideLeft(game.gameBoard[r]); //move current row and set it back to current row
+      game.gameBoard[r] = rowArray; //put it back into the grid
+    }
+    newTile();
+    updateGameBoard();
+  }
+});
+
+$(".right").on("click", () => {
+  if (game.gameNotOver) {
+    for (let r = game.rows - 1; r >= 0; r--) {
+      let rowArray = slideRight(game.gameBoard[r]); //move current row and set it back to current row
+      game.gameBoard[r] = rowArray; //put it back into the grid
+    }
+    newTile();
+    updateGameBoard();
+  }
+});
+
+$(".up").on("click", () => {
+  if (game.gameNotOver) {
+    const newBoard2 = transpose(game.gameBoard);
+    for (let r = 0; r < game.rows; r++) {
+      let rowArray = slideUp(newBoard2[r]); //move current row and set it back to current row
+      newBoard2[r] = rowArray;
+      game.gameBoard = transpose(newBoard2); //put it back into the grid
+    }
+    newTile();
+    updateGameBoard();
+  }
+});
+
+$(".down").on("click", () => {
+  if (game.gameNotOver) {
+    const newBoard = transpose(game.gameBoard);
+    for (let r = game.rows - 1; r >= 0; r--) {
+      let rowArray = slideDown(newBoard[r]); //move current row and set it back to current row
+      newBoard[r] = rowArray;
+      game.gameBoard = transpose(newBoard); //put it back into the grid
+    }
+    newTile();
+    updateGameBoard();
   }
 });
 
