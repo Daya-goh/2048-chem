@@ -31,7 +31,6 @@ In this game, instead of combining numbers, you will combine elements to get the
 
 ### Deployment
 The game is deployed on GitHub pages, and you can play the game here: 
-* https://github.com/Daya-goh/2048-chem
 * https://2048-chem-daya-goh.vercel.app
 
 ### How To Play
