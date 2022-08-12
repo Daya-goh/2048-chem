@@ -336,3 +336,9 @@ li {
   /* Zirconium[40] */
   background-color: #f2003c;
 }
+
+@media screen and (max-width: 800px) {
+  #start-page {
+    width: 100%;
+  }
+}

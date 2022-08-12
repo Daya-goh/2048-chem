@@ -485,3 +485,4 @@ const pageTransition = () => {
 
 pageTransition();
 renderGameBoard();
+
