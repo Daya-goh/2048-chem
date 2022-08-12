@@ -49,9 +49,11 @@ button:hover {
   display: flex;
   flex-direction: column;
 }
-.buttons-layout {
+.arrow-button {
+  width: 200px;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 }
 /* game board page */
 
